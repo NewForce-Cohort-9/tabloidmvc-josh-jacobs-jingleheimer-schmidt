@@ -1,0 +1,7 @@
+﻿SELECT * FROM Category
+SELECT * FROM Tag
+SELECT * FROM UserProfile
+SELECT * FROM Post
+
+SELECT * FROM PostTag
+SELECT * FROM UserType
