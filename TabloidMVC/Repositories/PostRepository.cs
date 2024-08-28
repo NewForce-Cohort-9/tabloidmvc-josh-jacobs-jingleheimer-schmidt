@@ -208,6 +208,12 @@ namespace TabloidMVC.Repositories
                     cmd.CommandText = @"
                         UPDATE Post
                         SET
+                            Title = @title,
+                            Content = @content, 
+                            ImageLocation = @imageLocation, 
+                            CreateDateTime = @createDateTime, 
+                            PublishDateTime = @publishedDateTime,
+
                                        ";
                 }
             }
