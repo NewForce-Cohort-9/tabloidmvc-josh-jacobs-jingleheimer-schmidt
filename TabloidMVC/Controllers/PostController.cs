@@ -73,5 +73,18 @@ namespace TabloidMVC.Controllers
             string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return int.Parse(id);
         }
+        public IActionResult Edit(int id)
+        {
+            return View();
+        }
+        public IActionResult Edit(in Id, Post post)
+        {
+            try
+            {
+                _postRepository.UpdatePost(post);
+            }
+        }
+
     }
+
 }

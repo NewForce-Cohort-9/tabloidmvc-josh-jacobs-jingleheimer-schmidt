@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authentication.OAuth.Claims;
+using System.Collections.Generic;
 using TabloidMVC.Models;
 
 namespace TabloidMVC.Repositories
@@ -9,5 +10,7 @@ namespace TabloidMVC.Repositories
         List<Post> GetAllPublishedPosts();
         Post GetPublishedPostById(int id);
         Post GetUserPostById(int id, int userProfileId);
+
+
     }
 }

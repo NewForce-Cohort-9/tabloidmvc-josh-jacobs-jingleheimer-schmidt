@@ -197,5 +197,20 @@ namespace TabloidMVC.Repositories
                 }
             };
         }
+
+        public void UpdatePost(Post post)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        UPDATE Post
+                        SET
+                                       ";
+                }
+            }
+        }
     }
 }
