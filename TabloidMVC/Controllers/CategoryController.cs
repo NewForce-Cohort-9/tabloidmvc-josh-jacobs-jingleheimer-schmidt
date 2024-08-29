@@ -44,21 +44,27 @@ namespace TabloidMVC.Controllers
         // GET: CategoryController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Category category = _categoryRepository.GetCategoryById(id);
+            if(category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
         }
 
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Category category)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _categoryRepository.UpdateCategory(category);
+                return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                return View(category);
             }
         }
 
