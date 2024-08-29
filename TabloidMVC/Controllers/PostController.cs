@@ -6,6 +6,7 @@ using System.Security.Claims;
 using TabloidMVC.Models.ViewModels;
 using TabloidMVC.Models;
 using TabloidMVC.Repositories;
+using Microsoft.Extensions.Hosting;
 
 namespace TabloidMVC.Controllers
 {
@@ -76,27 +77,41 @@ namespace TabloidMVC.Controllers
         }
         public IActionResult Edit(int id)
         {
-            Post post = _postRepository.GetPublishedPostById(id);
+            List<Category> Categoryyy = _categoryRepository.GetAll();
+
             var vm = new PostEditViewModel();
+            vm.CategoryOptions = Categoryyy;
+            vm.Post= _postRepository.GetPublishedPostById(id);
+
             return View(vm);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Post post)
+        public IActionResult Edit(int id, PostEditViewModel vm, Post post)
         {
+            ////List<Category> Category = _categoryRepository.GetAll();
+            //PostEditViewModel vm = new PostEditViewModel()
+            //{
+            //    Post = post
+            //    //CategoryOptions = Category
+            //};
+            //return View(vm);
+
             try
             {
+
+
                 _postRepository.UpdatePost(post);
 
                 return RedirectToAction("Index");
-            }
-            catch(Exception ex)
-            {
-                return View(post);
-            }
         }
-
+            catch
+            {
+                vm.CategoryOptions = _categoryRepository.GetAll();
+                return View(vm.Post);
     }
-
 }
+    }
+}
+
