@@ -1,0 +1,35 @@
+﻿@model TabloidMVC.Models.Tag
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 style="width:90vw; height:50%; text-align:center">New Tag</h1>
+
+<hr />
+<br />
+<div class="row justify-content-center align-items-center" style="width:95vw; height:50%; align-content:center">
+    <div class="col-md-4 d-flex justify-content-center align-items-center">
+        <form asp-action="Create" class="w-100">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group w-100">
+                <label asp-for="Name" class="control-label text-center w-100"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group d-flex justify-content-center w-100">
+                <input type="submit" style="background-color:#7459EC; color:#FFFFFF" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<br />
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
