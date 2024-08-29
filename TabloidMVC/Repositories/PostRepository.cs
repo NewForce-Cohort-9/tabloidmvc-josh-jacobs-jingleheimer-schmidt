@@ -6,6 +6,7 @@ using System.Security.Cryptography.Pkcs;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using TabloidMVC.Models;
+using TabloidMVC.Models.ViewModels;
 using TabloidMVC.Utils;
 
 namespace TabloidMVC.Repositories

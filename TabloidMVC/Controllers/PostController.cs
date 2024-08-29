@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.VisualBasic;
 using System.Security.Claims;
 using TabloidMVC.Models.ViewModels;
+using TabloidMVC.Models;
 using TabloidMVC.Repositories;
 
 namespace TabloidMVC.Controllers
@@ -75,13 +76,9 @@ namespace TabloidMVC.Controllers
         }
         public IActionResult Edit(int id)
         {
-            Models.Post post = _postRepository.GetPublishedPostById(id);
-
-            if (post == null)
-            {
-                return NotFound();
-            }
-            return View(post);
+            Post post = _postRepository.GetPublishedPostById(id);
+            var vm = new PostEditViewModel();
+            return View(vm);
         }
 
         [HttpPost]
@@ -92,7 +89,7 @@ namespace TabloidMVC.Controllers
             {
                 _postRepository.UpdatePost(post);
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             catch(Exception ex)
             {
