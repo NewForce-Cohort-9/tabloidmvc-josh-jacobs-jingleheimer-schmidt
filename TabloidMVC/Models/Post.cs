@@ -15,13 +15,13 @@ namespace TabloidMVC.Models
 
         [DisplayName("Header Image URL")]
         public string ImageLocation { get; set; }
-
+        [DisplayName("Created Date")]
         public DateTime CreateDateTime { get; set; }
 
         [DisplayName("Published")]
         [DataType(DataType.Date)]
         public DateTime? PublishDateTime { get; set; }
-
+        [DisplayName("Is Approved")]
         public bool IsApproved { get; set; }
 
         [Required]

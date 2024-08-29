@@ -75,13 +75,28 @@ namespace TabloidMVC.Controllers
         }
         public IActionResult Edit(int id)
         {
-            return View();
+            Models.Post post = _postRepository.GetPublishedPostById(id);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+            return View(post);
         }
-        public IActionResult Edit(in Id, Post post)
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Post post)
         {
             try
             {
                 _postRepository.UpdatePost(post);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch(Exception ex)
+            {
+                return View(post);
             }
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Reflection.PortableExecutable;
+using System.Security.Cryptography.Pkcs;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using TabloidMVC.Models;
@@ -132,7 +133,6 @@ namespace TabloidMVC.Repositories
             }
         }
 
-
         public void Add(Post post)
         {
             using (var conn = Connection)
@@ -213,8 +213,23 @@ namespace TabloidMVC.Repositories
                             ImageLocation = @imageLocation, 
                             CreateDateTime = @createDateTime, 
                             PublishDateTime = @publishedDateTime,
+                            IsApproved = @isApproved, 
+                            CategoryId = @catagoryId, 
+                            UserProfileId = @userProfileId
+                        WHERE Id = @id ";
 
-                                       ";
+                    cmd.Parameters.AddWithValue("@title", post.Title);
+                    cmd.Parameters.AddWithValue("@content", post.Content);
+                    cmd.Parameters.AddWithValue("@imageLocation", post.ImageLocation);
+                    cmd.Parameters.AddWithValue("@createDateTime", post.CreateDateTime);
+                    cmd.Parameters.AddWithValue("@publishedDateTime", post.PublishDateTime);
+                    cmd.Parameters.AddWithValue("@IsApproved", post.IsApproved);
+                    cmd.Parameters.AddWithValue("@CategoryId", post.CategoryId);
+                    cmd.Parameters.AddWithValue("@UserProfileId", post.UserProfileId);
+                    cmd.Parameters.AddWithValue("@id", post.Id);
+
+                    cmd.ExecuteNonQuery();
+
                 }
             }
         }
