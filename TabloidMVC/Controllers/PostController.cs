@@ -90,28 +90,18 @@ namespace TabloidMVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, PostEditViewModel vm, Post post)
         {
-            ////List<Category> Category = _categoryRepository.GetAll();
-            //PostEditViewModel vm = new PostEditViewModel()
-            //{
-            //    Post = post
-            //    //CategoryOptions = Category
-            //};
-            //return View(vm);
-
             try
             {
-
-
                 _postRepository.UpdatePost(post);
 
                 return RedirectToAction("Index");
-        }
+            }
             catch
             {
                 vm.CategoryOptions = _categoryRepository.GetAll();
                 return View(vm.Post);
-    }
-}
+            }
+        }
     }
 }
 
