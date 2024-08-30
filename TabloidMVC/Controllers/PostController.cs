@@ -4,7 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.VisualBasic;
 using System.Security.Claims;
 using TabloidMVC.Models.ViewModels;
+using TabloidMVC.Models;
 using TabloidMVC.Repositories;
+using Microsoft.Extensions.Hosting;
 
 namespace TabloidMVC.Controllers
 {
@@ -73,5 +75,33 @@ namespace TabloidMVC.Controllers
             string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return int.Parse(id);
         }
+        public IActionResult Edit(int id)
+        {
+            List<Category> Categoryyy = _categoryRepository.GetAll();
+
+            var vm = new PostEditViewModel();
+            vm.CategoryOptions = Categoryyy;
+            vm.Post= _postRepository.GetPublishedPostById(id);
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, PostEditViewModel vm, Post post)
+        {
+            try
+            {
+                _postRepository.UpdatePost(post);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                vm.CategoryOptions = _categoryRepository.GetAll();
+                return View(vm.Post);
+            }
+        }
     }
 }
+
