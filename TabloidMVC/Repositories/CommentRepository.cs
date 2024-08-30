@@ -31,7 +31,8 @@ namespace TabloidMVC.Repositories
                             UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
                             Subject = reader.GetString(reader.GetOrdinal("Subject")),
                             Content = reader.GetString(reader.GetOrdinal("Content")),
-                            CreatedDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime"))
+                            CreatedDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                            DisplayName = reader.GetString(reader.GetOrdinal("DisplayName"))
 
                         });
 

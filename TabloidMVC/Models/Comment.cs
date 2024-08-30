@@ -10,5 +10,6 @@
         public DateTime CreatedDateTime { get; set; }
         public Post? Post { get; set; }
         public UserProfile? Profile { get; set; }
+        public string DisplayName { get; set; }
     }
 }

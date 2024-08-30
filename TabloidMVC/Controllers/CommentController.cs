@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TabloidMVC.Repositories;
 using TabloidMVC.Models;
+using TabloidMVC.Models.ViewModels;
 
 namespace TabloidMVC.Controllers
 {
@@ -13,7 +14,13 @@ namespace TabloidMVC.Controllers
             Post post = _postRepository.GetPublishedPostById(id);
             int postId = post.Id;
             List<Comment> comments = _commentRepository.GetCommentsByPostId(postId);
-            return View(comments);
+
+            CommentIndexViewModel vm = new CommentIndexViewModel()
+            {
+                post = post,
+                comments = comments
+            };
+            return View(vm);
         }
 
         // GET: CommentController/Details/5
