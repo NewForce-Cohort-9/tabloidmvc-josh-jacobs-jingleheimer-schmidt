@@ -38,6 +38,37 @@ namespace TabloidMVC.Repositories
             }
         }
 
+        public Tag GetTagById(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                SELECT Id, [Name]
+                                FROM Tag
+                                WHERE Id = @id
+                    ";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    Tag tag = null;
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        tag = new Tag()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Name = reader.GetString(reader.GetOrdinal("Name"))
+                        };
+                    }
+                }
+            }
+        }
+
         public void AddTag(Tag tag)
         {
             using (SqlConnection  conn = Connection)
