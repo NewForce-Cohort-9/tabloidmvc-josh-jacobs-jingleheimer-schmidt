@@ -8,9 +8,11 @@ namespace TabloidMVC.Controllers
     public class CommentController : Controller
     {
         // GET: CommentController
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            List<Comment> comments = _commentRepository.GetCommentsByPostId();
+            Post post = _postRepository.GetPublishedPostById(id);
+            int postId = post.Id;
+            List<Comment> comments = _commentRepository.GetCommentsByPostId(postId);
             return View(comments);
         }
 
@@ -84,9 +86,11 @@ namespace TabloidMVC.Controllers
         }
 
         private readonly ICommentRepository _commentRepository;
-        public CommentController(ICommentRepository commentRepository)
+        private readonly IPostRepository _postRepository;
+        public CommentController(ICommentRepository commentRepository, IPostRepository postRepository)
         {
             _commentRepository = commentRepository;
+            _postRepository = postRepository;
         }
     }
 }
