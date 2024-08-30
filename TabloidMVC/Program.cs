@@ -19,6 +19,11 @@ namespace TabloidMVC
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
 
+
+
+
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
