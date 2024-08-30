@@ -65,6 +65,9 @@ namespace TabloidMVC.Repositories
                             Name = reader.GetString(reader.GetOrdinal("Name"))
                         };
                     }
+
+                    reader.Close();
+                    return tag;
                 }
             }
         }
@@ -86,6 +89,26 @@ namespace TabloidMVC.Repositories
                     int newTagId = (int)cmd.ExecuteScalar();
 
                     tag.Id = newTagId;
+                }
+            }
+        }
+
+        public void DeleteTag(int tagId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                DELETE FROM Tag
+                                WHERE Id = @id
+                                       ";
+
+                    cmd.Parameters.AddWithValue("@id", tagId);
+
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
