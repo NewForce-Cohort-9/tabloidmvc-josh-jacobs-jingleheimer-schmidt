@@ -133,7 +133,7 @@ namespace TabloidMVC.Repositories
                 }
             }
         }
-
+        //Creates a new post 
         public void Add(Post post)
         {
             using (var conn = Connection)
@@ -199,6 +199,7 @@ namespace TabloidMVC.Repositories
             };
         }
 
+        //Edits a Post in the datase
         public void UpdatePost(Post post)
         {
             using (var conn = Connection)
@@ -231,6 +232,22 @@ namespace TabloidMVC.Repositories
 
                     cmd.ExecuteNonQuery();
 
+                }
+            }
+        }
+
+        //Deletes a post from the database.
+        public void DeletePost(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM Post WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
