@@ -7,6 +7,8 @@ using TabloidMVC.Models.ViewModels;
 using TabloidMVC.Models;
 using TabloidMVC.Repositories;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Data.SqlClient;
+using NuGet.Protocol.Plugins;
 
 namespace TabloidMVC.Controllers
 {
@@ -85,7 +87,7 @@ namespace TabloidMVC.Controllers
 
             return View(vm);
         }
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, PostEditViewModel vm, Post post)
@@ -100,6 +102,28 @@ namespace TabloidMVC.Controllers
             {
                 vm.CategoryOptions = _categoryRepository.GetAll();
                 return View(vm.Post);
+            }
+        }
+
+        // GET: PostController/Delete/5
+        public IActionResult Delete(int id)
+        {
+            Post post = _postRepository.GetPublishedPostById(id);
+            return View(post);
+        }
+        // POST: PostController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, Post post)
+        {
+            try
+            {
+                _postRepository.DeletePost(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                return View(post);
             }
         }
     }

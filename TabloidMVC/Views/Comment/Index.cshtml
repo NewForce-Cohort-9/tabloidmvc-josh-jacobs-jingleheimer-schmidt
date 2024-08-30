@@ -1,0 +1,54 @@
+﻿@model TabloidMVC.Models.ViewModels.CommentIndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+    <a asp-action="Details" asp-controller="Post" asp-route-id="@Model.post.Id">Back to Post</a>
+</p>
+<table class="table">
+     <thead>
+         <tr>
+             <th>
+                 @Html.DisplayNameFor(model => model.comment.DisplayName)
+             </th>
+             <th>
+                 @Html.DisplayNameFor(model => model.comment.Subject)
+             </th>
+             <th>
+                 @Html.DisplayNameFor(model => model.comment.Content)
+             </th>
+             <th>
+                 @Html.DisplayNameFor(model => model.comment.CreatedDateTime)
+             </th>
+             <th></th>
+         </tr>
+     </thead>
+    <tbody>
+@foreach (var comment in Model.comments) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => comment.DisplayName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => comment.Subject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => comment.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => comment.CreatedDateTime)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
