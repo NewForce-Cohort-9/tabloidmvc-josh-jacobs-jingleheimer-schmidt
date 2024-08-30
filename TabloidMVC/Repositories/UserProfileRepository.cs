@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using TabloidMVC.Models;
 using TabloidMVC.Utils;
 
@@ -52,6 +53,56 @@ namespace TabloidMVC.Repositories
                     return userProfile;
                 }
             }
+
+
         }
+
+        public List<UserProfile> GetAllUserProfiles()
+        {
+            using (SqlConnection conn = Connection)
+
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+
+                {
+                    cmd.CommandText = @"
+                        SELECT FirstName, LastName, DisplayName, UserTypeId, Id, Email, CreateDateTime, ImageLocation
+                              FROM UserProfile
+                                ";
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    List<UserProfile> userprofiles = new List<UserProfile>();
+                    while (reader.Read())
+                    {
+                        UserProfile userProfile = new UserProfile()
+                        {
+                            FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                            LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                            DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")),
+                            UserTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
+                            CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                            ImageLocation = reader.GetString(reader.GetOrdinal("ImageLocation")),
+                            Email = reader.GetString(reader.GetOrdinal("Email")),
+                            Id = reader.GetInt32(reader.GetOrdinal("Id"))
+                        };
+
+                        userprofiles.Add(userProfile);
+
+                    }
+
+                    reader.Close();
+
+                    return userprofiles;
+
+                }
+
+            }
+
+        } 
+    
     }
+
+    
 }
