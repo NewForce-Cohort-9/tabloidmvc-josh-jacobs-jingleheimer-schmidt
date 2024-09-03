@@ -3,11 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using TabloidMVC.Repositories;
 using TabloidMVC.Models;
 using TabloidMVC.Models.ViewModels;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace TabloidMVC.Controllers
 {
     public class CommentController : Controller
     {
+       
         // GET: CommentController
         public ActionResult Index(int id)
         {
@@ -30,21 +33,29 @@ namespace TabloidMVC.Controllers
         }
 
         // GET: CommentController/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            return View();
+            Comment comment = new Comment();
+            comment.PostId = id;
+
+            return View(comment);
         }
 
         // POST: CommentController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Comment comment)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                comment.UserProfileId = GetCurrentUserProfileId();
+                comment.CreatedDateTime = DateTime.Now;
+               
+
+                _commentRepository.CreateComment(comment);
+                return RedirectToAction("Index", new {id = comment.PostId });
             }
-            catch
+            catch 
             {
                 return View();
             }
@@ -98,6 +109,11 @@ namespace TabloidMVC.Controllers
         {
             _commentRepository = commentRepository;
             _postRepository = postRepository;
+        }
+        private int GetCurrentUserProfileId()
+        {
+            string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return int.Parse(id);
         }
     }
 }
